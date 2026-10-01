@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>FreshCart - Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <div class="logo">FreshCart Admin</div>
+    <button class="btn-secondary" onclick="location.href='index.html'">Back to Store</button>
+  </header>
+
+  <main class="container">
+    <h2>Add New Item</h2>
+    <form id="productForm" style="display:flex; gap:12px; margin: 20px 0; flex-wrap: wrap; background:white; padding:20px; border-radius:10px; border:1px solid #e2e8f0;">
+      <input type="text" id="pTitle" placeholder="Product Title (e.g. Fresh Orange)" required style="padding:10px; border:1px solid #ccc; border-radius:6px; flex:1;" />
+      <input type="number" id="pPrice" placeholder="Price (₹)" required style="padding:10px; border:1px solid #ccc; border-radius:6px; width:120px;" />
+      <input type="text" id="pUnit" placeholder="Unit (e.g. 1 kg)" style="padding:10px; border:1px solid #ccc; border-radius:6px; width:120px;" />
+      <input type="text" id="pImg" placeholder="Image URL (Unsplash/Direct link)" style="padding:10px; border:1px solid #ccc; border-radius:6px; flex:1;" />
+      <button type="submit" class="btn-primary">Add Product</button>
+    </form>
+
+    <h2 style="margin-top: 40px;">Customer Orders</h2>
+    <div id="ordersList" style="margin-top: 16px; display:flex; flex-direction:column; gap:12px;"></div>
+  </main>
+
+  <script>
+    const API_URL = 'http://localhost:5000/api';
+
+    document.getElementById('productForm').onsubmit = async (e) => {
+      e.preventDefault();
+      await fetch(`${API_URL}/admin/products`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: document.getElementById('pTitle').value,
+          price: document.getElementById('pPrice').value,
+          unit: document.getElementById('pUnit').value,
+          image_url: document.getElementById('pImg').value
+        })
+      });
+      alert('Product Add ho gaya!');
+      e.target.reset();
+    };
+
+    async function loadOrders() {
+      const res = await fetch(`${API_URL}/admin/orders`);
+      const orders = await res.json();
+      document.getElementById('ordersList').innerHTML = orders.map(o => `
+        <div style="background:white; border:1px solid #e2e8f0; padding:16px; border-radius:8px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong>Order #${o.id.slice(0,8)}</strong> — <span style="color:#059669; font-weight:bold;">₹${o.total_amount}</span><br>
+            <small style="color:#64748b;">Address: ${o.delivery_address} | Phone: ${o.phone}</small>
+          </div>
+          <select onchange="updateStatus('${o.id}', this.value)" style="padding:6px; border-radius:6px; border:1px solid #cbd5e1;">
+            <option value="pending" ${o.status==='pending'?'selected':''}>Pending</option>
+            <option value="confirmed" ${o.status==='confirmed'?'selected':''}>Confirmed</option>
+            <option value="out_for_delivery" ${o.status==='out_for_delivery'?'selected':''}>Out For Delivery</option>
+            <option value="delivered" ${o.status==='delivered'?'selected':''}>Delivered</option>
+          </select>
+        </div>
+      `).join('');
+    }
+
+    async function updateStatus(id, status) {
+      await fetch(`${API_URL}/admin/orders/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status })
+      });
+      alert('Status Update Ho Gaya!');
+    }
+
+    loadOrders();
+  </script>
+</body>
+</html>

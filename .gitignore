@@ -1,0 +1,16 @@
+﻿# Dependencies
+node_modules/
+*/node_modules/
+
+# Secrets & Environment variables
+.env
+*.env
+backend/.env
+
+# Editor & OS files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

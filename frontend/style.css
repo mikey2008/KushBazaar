@@ -1,0 +1,30 @@
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+body { background: #f8fafc; color: #0f172a; padding-bottom: 60px; }
+
+header { display: flex; justify-content: space-between; align-items: center; padding: 16px 32px; background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 20; }
+.logo { font-size: 22px; font-weight: 800; color: #059669; }
+.nav-buttons { display: flex; gap: 12px; align-items: center; }
+
+button { cursor: pointer; padding: 8px 16px; border-radius: 8px; border: none; font-weight: 600; font-size: 14px; transition: 0.15s ease; }
+.btn-primary { background: #059669; color: #ffffff; }
+.btn-primary:hover { background: #047857; }
+.btn-secondary { background: #f1f5f9; color: #334155; border: 1px solid #cbd5e1; }
+.btn-secondary:hover { background: #e2e8f0; }
+
+.container { max-width: 1100px; margin: 32px auto; padding: 0 20px; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 24px; margin-top: 20px; }
+
+.product-card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+.product-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 12px; background: #f8fafc; }
+.product-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+.product-card p { color: #64748b; font-size: 13px; }
+.price { font-size: 18px; font-weight: 700; color: #059669; margin: 10px 0; }
+
+/* Modal & Cart Drawer */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 100; }
+.modal-content { background: white; padding: 28px; border-radius: 14px; width: 100%; max-width: 360px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+.modal-content input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; }
+
+.drawer { display: none; position: fixed; top: 0; right: 0; width: 360px; height: 100%; background: white; box-shadow: -4px 0 20px rgba(0,0,0,0.15); padding: 24px; flex-direction: column; z-index: 100; }
+.drawer-content { flex: 1; overflow-y: auto; margin: 16px 0; }
+.cart-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding: 12px 0; }

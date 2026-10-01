@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FreshCart - Grocery App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">KushCart</div>
+    <div class="nav-buttons">
+      <span id="userGreeting" style="font-size: 14px; font-weight: 600;"></span>
+      <button id="adminBtn" class="btn-secondary" style="display:none;" onclick="location.href='admin.html'">Admin Panel</button>
+      <button id="cartBtn" class="btn-secondary">Cart (<span id="cartCount">0</span>)</button>
+      <button id="authBtn" class="btn-primary" onclick="openAuthModal()">Login</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <h2>Explore Fresh Groceries</h2>
+    <div class="products-grid" id="productsList"></div>
+  </main>
+
+  <!-- Login/Signup Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-content">
+      <h3 id="modalTitle" style="margin-bottom: 12px;">Login</h3>
+      <input type="text" id="authName" placeholder="Full Name" style="display:none;" />
+      <input type="email" id="authEmail" placeholder="Email Address" />
+      <input type="password" id="authPassword" placeholder="Password" />
+      <button class="btn-primary" style="width:100%; margin-top:10px;" onclick="handleAuthSubmit()">Submit</button>
+      <p style="margin-top: 12px; font-size: 13px; text-align: center;">
+        <span id="toggleText">Don't have an account?</span> 
+        <a href="#" style="color: #059669; text-decoration: none; font-weight: 600;" onclick="toggleAuthMode()">Register</a>
+      </p>
+      <button class="btn-secondary" style="width:100%; margin-top: 8px;" onclick="closeAuthModal()">Close</button>
+    </div>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div class="drawer" id="cartDrawer">
+    <h3>Your Basket</h3>
+    <div class="drawer-content" id="cartItems"></div>
+    <div style="border-top: 1px solid #e2e8f0; padding-top: 16px;">
+      <div style="display:flex; justify-content:space-between; font-size: 18px; font-weight:bold; margin-bottom: 12px;">
+        <span>Total:</span>
+        <span>₹<span id="cartTotal">0</span></span>
+      </div>
+      <input type="text" id="deliveryAddress" placeholder="Delivery Address" style="width:100%; padding:10px; margin-bottom: 8px; border:1px solid #cbd5e1; border-radius:6px;" />
+      <input type="text" id="deliveryPhone" placeholder="Phone Number" style="width:100%; padding:10px; margin-bottom: 12px; border:1px solid #cbd5e1; border-radius:6px;" />
+      <button class="btn-primary" style="width:100%;" onclick="checkout()">Place Order (Cash On Delivery)</button>
+      <button class="btn-secondary" style="width:100%; margin-top: 8px;" onclick="closeCart()">Close</button>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
